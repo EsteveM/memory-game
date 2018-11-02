@@ -10,16 +10,19 @@ html {
 
 html,
 body {
-    width: 100%;
-    height: 100%;
     margin: 0;
     padding: 0;
+    width: 100%;
+    height: auto;
 }
 
 body {
-    background: #ffffff url('../img/geometry2.png'); /* Background pattern from Subtle Patterns */
+    background: #ffffff url('../img/geometry2.png');
+    /* Background pattern from Subtle Patterns */
     font-family: 'Coda', cursive;
 }
+
+/* Main container (heading, score panel, and deck of cards). */
 
 .container {
     display: flex;
@@ -31,54 +34,7 @@ body {
 h1 {
     font-family: 'Open Sans', sans-serif;
     font-weight: 300;
-}
-
-/*
- * Styles for the deck of cards
- */
-
-.deck {
-    width: 660px;
-    min-height: 680px;
-    background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
-    padding: 32px;
-    border-radius: 10px;
-    box-shadow: 12px 15px 20px 0 rgba(46, 61, 73, 0.5);
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    margin: 0 0 3em;
-}
-
-.deck .card {
-    height: 125px;
-    width: 125px;
-    background: #2e3d49;
-    font-size: 0;
-    color: #ffffff;
-    border-radius: 8px;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5);
-}
-
-.deck .card.open {
-    transform: rotateY(0);
-    background: #02b3e4;
-    cursor: default;
-}
-
-.deck .card.show {
-    font-size: 33px;
-}
-
-.deck .card.match {
-    cursor: default;
-    background: #02ccba;
-    font-size: 33px;
+    font-size: 12.5vw;
 }
 
 /*
@@ -86,24 +42,538 @@ h1 {
  */
 
 .score-panel {
-    text-align: left;
-    width: 345px;
-    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    font-size: 6vw;
+    text-align: center;
+    width: 100%;
+
 }
 
 .score-panel .stars {
-    margin: 0;
     padding: 0;
+    margin: 0;
     display: inline-block;
-    margin: 0 5px 0 0;
+
 }
 
 .score-panel .stars li {
-    list-style: none;
     display: inline-block;
+    list-style: none;
 }
 
 .score-panel .restart {
-    float: right;
     cursor: pointer;
+}
+
+/* The hidden class is created for performance reasons. It makes it
+    possible to apply the hide/change all/show pattern. */
+
+.score-panel .stars.hidden {
+    visibility: hidden;
+}
+
+/*
+ * Styles for the deck of cards
+ */
+
+.deck {
+    width: 87.846vw;
+    min-height: 90.508vw;
+    background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
+    padding: 4.0414vw;
+    border-radius: 1.331vw;
+    box-shadow: 1.5972vw 1.9965vw 2.662vw 0 rgba(46, 61, 73, 0.5);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 0 3em;
+}
+
+/* The hidden class is created for performance reasons. It makes it
+    possible to apply the hide/change all/show pattern. */
+
+.deck.hidden {
+    visibility: hidden;
+}
+
+.deck .card {
+    height: 16.6375vw;
+    width: 16.6375vw;
+    background: #2e3d49;
+    font-size: 0;
+    color: #ffffff;
+    border-radius: 1.0648vw;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0.6655vw 0.2662vw 2.662vw 0 rgba(46, 61, 73, 0.5);
+}
+
+/* The class "closed" is created so that the transition from "closed" to
+   "open" and vice-versa provokes a flip of the card. */
+
+.deck .card.closed {
+    transform: rotateY(180deg);
+    transition: transform 0.1s;
+}
+
+.deck .card.open {
+    transform: rotateY(0deg);
+    transition: transform 0.1s;
+    background: #02b3e4;
+    cursor: default;
+    font-size: 6vw;
+}
+
+.deck .card.match {
+    transform: rotateY(0deg);
+    transition: transform 0.1s;
+    cursor: default;
+    background: #02ccba;
+    font-size: 6vw;
+}
+
+/* A new container has been created for the message to be shown to the user when
+   they win the game. It is comprised of:
+
+              - A check symbol.
+              - A congratulation message.
+              - A message showing the moves made and the stars obtained.
+              - A message showing the total duration of the game.
+              - A message to cheer up the user
+              - A "Play again!" button to start a new game.
+
+    Here at the CSS, the new container is styled.
+*/
+
+/* Container for the congratulation message. */
+
+.container-winner {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.fa-check {
+    color: green;
+    font-size: 15vw;
+    margin: 30vw 40vw 3vw;
+}
+
+.congratulations {
+    font-size: 6vw;
+    margin: 5vw 10vw 2vw;
+}
+
+.moves-stars {
+    font-size: 4vw;
+    color: grey;
+    margin: 4vw 20vw 2vw;
+}
+
+.duration {
+    font-size: 4vw;
+    color: grey;
+    margin: 3vw 20vw 2vw;
+}
+
+.woooooo {
+    font-size: 4vw;
+    color: grey;
+    margin: 3vw 32vw 2vw;
+}
+
+.button {
+    color: white;
+    background-color: green;
+    margin: 4vw 28vw 2vw;
+    padding: 1vw 1vw 1vw 1vw;
+    width: 30vw;
+    font-size: 4vw;
+    cursor: pointer;
+    border-radius: 1vw;
+}
+
+/* Two new classes ("win") are created. One for the main container (heading,
+   score panel, and deck of cards) and another one for the new container
+   (congratulations message), so that only one of them is visible at any
+   given time. */
+
+.container.win {
+    display: none;
+}
+
+.container-winner.win {
+    display: flex;
+}
+
+/* Media queries and relative units have been used for responsiveness. */
+
+/* Breakpoint at 450 pixels */
+
+@media screen and (min-width: 451px) {
+
+/* Heading */
+
+    h1 {
+        font-size: 11vw;
+    }
+
+/* Score panel */
+
+    .score-panel {
+        font-size: 4.5vw;
+        flex-direction: row;
+    }
+
+    .score-panel .stars {
+        width: 25%;
+    }
+
+    .score-panel .moves {
+        width: 25%;
+    }
+
+    .score-panel .timer {
+        width: 25%;
+    }
+
+    .score-panel .restart {
+        width: 25%;
+    }
+
+/* Congratulations message */
+
+    .fa-check {
+        font-size: 12vw;
+        margin: 20vw 32vw 2.8vw;
+    }
+
+    .congratulations {
+        font-size: 5vw;
+        margin: 3.5vw 9vw 1.5vw;
+    }
+
+    .moves-stars {
+        font-size: 3vw;
+        margin: 3vw 17vw 1.5vw;
+    }
+
+    .duration {
+        font-size: 3vw;
+        margin: 3vw 17vw 1.5vw;
+    }
+
+    .woooooo {
+        font-size: 3vw;
+        margin: 2.5vw 27vw 1.5vw;
+    }
+
+    .button {
+        margin: 3vw 23vw 1.5vw;
+        padding: 0.7vw 0.7vw 0.7vw 0.7vw;
+        width: 23vw;
+        font-size: 3.5vw;
+        border-radius: 0.7vw;
+    }
+
+}
+
+/* Breakpoint at 600 pixels */
+
+@media screen and (min-width: 601px) {
+
+/* Heading */
+
+    h1 {
+        font-size: 7.5vw;
+    }
+
+/* Score panel */
+
+    .score-panel {
+        font-size: 3.2vw;
+    }
+
+    .score-panel .stars {
+        width: 50%;
+    }
+
+    .score-panel .moves {
+
+        width: 50%;
+    }
+
+    .score-panel .timer {
+
+       width: 50%;
+    }
+
+    .score-panel .restart {
+
+        width: 50%;
+    }
+
+/* Deck of cards */
+
+    .deck {
+        width: 74.669vw;
+        min-height: 76.932vw;
+        padding: 3.4352vw;
+        border-radius: 1.1313vw;
+        box-shadow: 1.3736vw 1.697vw 2.2627vw 0 rgba(46, 61, 73, 0.5);
+    }
+
+    .deck .card {
+        height: 14.14187vw;
+        width: 14.14187vw;
+        font-size: 0;
+        border-radius: 1.0648vw;
+        box-shadow: 0.56567vw 0.22627vw 2.2627vw 0 rgba(46, 61, 73, 0.5);
+    }
+
+    .deck .card.open {
+        font-size: 5.1vw;
+    }
+
+    .deck .card.match {
+        font-size: 5.1vw;
+    }
+
+/* Congratulations message */
+
+    .fa-check {
+        font-size: 9vw;
+        margin: 12vw 32vw 2.8vw;
+    }
+
+    .congratulations {
+        font-size: 3.8vw;
+        margin: 3vw 15vw 1.5vw;
+    }
+
+    .moves-stars {
+        font-size: 2.4vw;
+        margin: 3vw 22vw 1.5vw;
+    }
+
+    .duration {
+        font-size: 2.4vw;
+        margin: 3vw 22vw 1.5vw;
+    }
+
+    .woooooo {
+        font-size: 2.4vw;
+        margin: 2.5vw 30vw 1.5vw;
+    }
+
+    .button {
+        margin: 3vw 25vw 1.5vw;
+        padding: 0.6vw 0.6vw 0.6vw 0.6vw;
+        width: 22vw;
+        font-size: 2.8vw;
+    }
+
+}
+
+/* Breakpoint at 750 pixels */
+
+@media screen and (min-width: 751px) {
+
+    /* Heading */
+
+    h1 {
+        font-size: 6vw;
+    }
+
+    /* Score panel */
+
+    .score-panel {
+        font-size: 2.6vw;
+    }
+
+    /* Deck of cards */
+
+    .deck {
+        width: 63.4686vw;
+        min-height: 65.3322vw;
+        padding: 2.9199vw;
+        border-radius: 0.9616vw;
+        box-shadow: 1.1676vw 1.4424vw 1.9233vw 0 rgba(46, 61, 73, 0.5);
+    }
+
+    .deck .card {
+        height: 12.0206vw;
+        width: 12.0206vw;
+        font-size: 0;
+        border-radius: 0.90508vw;
+        box-shadow: 0.4808vw 0.19233vw 1.9233vw 0 rgba(46, 61, 73, 0.5);
+    }
+
+    .deck .card.open {
+        font-size: 4.335vw;
+    }
+
+    .deck .card.match {
+        font-size: 4.335vw;
+    }
+
+}
+
+/* Breakpoint at 900 pixels */
+
+@media screen and (min-width: 901px) {
+
+    /* Heading */
+
+    h1 {
+        font-size: 5.4vw;
+    }
+
+    /* Score panel */
+
+    .score-panel {
+        font-size: 2.3vw;
+    }
+
+    /* Deck of cards */
+
+    .deck {
+        width: 57.12174vw;
+        min-height: 58.7989vw;
+        padding: 2.6279vw;
+        border-radius: 0.8654vw;
+        box-shadow: 1.0508vw 1.2982vw 1.7309vw 0 rgba(46, 61, 73, 0.5);
+    }
+
+    .deck .card {
+        height: 10.8185vw;
+        width: 10.8185vw;
+        font-size: 0;
+        border-radius: 0.8146vw;
+        box-shadow: 0.4327vw 0.1731vw 1.7309vw 0 rgba(46, 61, 73, 0.5);
+    }
+
+    .deck .card.open {
+        font-size: 3.9015vw;
+    }
+
+    .deck .card.match {
+        font-size: 3.9015vw;
+    }
+
+    /* Congratulations message */
+
+    .fa-check {
+        font-size: 7.5vw;
+    }
+
+    .congratulations {
+        font-size: 3.3vw;
+    }
+
+    .moves-stars {
+        font-size: 2.1vw;
+    }
+
+    .duration {
+        font-size: 2.1vw;
+    }
+
+    .woooooo {
+        font-size: 2.1vw;
+    }
+
+    .button {
+        font-size: 2.4vw;
+    }
+
+}
+
+/* Breakpoint at 1001 pixels */
+
+@media screen and (min-width: 1001px) {
+
+    body {
+        width: 1000px;
+        margin: 0 auto 0 auto;
+    }
+
+    /* Heading */
+
+    h1 {
+        font-size: 54px;
+    }
+
+    /* Score panel */
+
+    .score-panel {
+        font-size: 23px;
+    }
+
+    /* Deck of cards */
+
+    .deck {
+        width: 571.2174px;
+        min-height: 587.989px;
+        padding: 26.279px;
+        border-radius: 8.654px;
+        box-shadow: 10.508px 12.982px 17.309px 0 rgba(46, 61, 73, 0.5);
+    }
+
+    .deck .card {
+        height: 108.185px;
+        width: 108.185px;
+        font-size: 0;
+        border-radius: 8.146px;
+        box-shadow: 4.327px 1.731px 17.309px 0 rgba(46, 61, 73, 0.5);
+    }
+
+    .deck .card.open {
+        font-size: 39.015px;
+    }
+
+    .deck .card.match {
+        font-size: 39.015px;
+    }
+
+    /* Congratulations message */
+
+    .fa-check {
+        font-size: 75px;
+        margin: 120px 320px 28px;
+    }
+
+    .congratulations {
+        font-size: 33px;
+        margin: 30px 150px 15px;
+    }
+
+    .moves-stars {
+        font-size: 21px;
+        margin: 30px 220px 15px;
+    }
+
+    .duration {
+        font-size: 21px;
+        margin: 30px 220px 15px;
+    }
+
+    .woooooo {
+        font-size: 21px;
+        margin: 25px 300px 15px;
+    }
+
+    .button {
+        margin: 30px 250px 15px;
+        padding: 6px 6px 6px 6px;
+        width: 220px;
+        font-size: 24px;
+        border-radius: 7px;
+    }
+
 }
